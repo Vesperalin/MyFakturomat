@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@radix-ui/themes/styles.css";
 
 :root {
   --background: #ffffff;
@@ -18,6 +19,7 @@
     --foreground: #ededed;
   }
 }
+
 
 body {
   background: var(--background);
