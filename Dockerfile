@@ -7,7 +7,7 @@ WORKDIR /my-fakturomat
 COPY package*.json ./
 
 # installs all dependencies
-RUN npm install
+RUN npm ci
 
 # copies rest of the files
 COPY . .
