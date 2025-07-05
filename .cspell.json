@@ -1,0 +1,44 @@
+{
+  "version": "0.2",
+  "language": "en,pl",
+  "dictionaries": [
+    "en-US",
+    "pl_pl",
+    "typescript",
+    "node",
+    "html",
+    "css",
+    "bash",
+    "fonts",
+    "softwareTerms",
+    "misc",
+    "npm"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "pl",
+      "path": "node_modules/cspell-dict-pl/pl.txt",
+      "description": "Polish dictionary",
+      "addWords": true
+    }
+  ],
+  "words": [
+    "Baza",
+    "Błażyczek",
+    "Fakturomat",
+    "fakturowe",
+    "Faktury",
+    "Klaudia",
+    "klientów",
+    "Pozycje",
+    "Ustawienia",
+    "Wyloguj"
+  ],
+  "flagWords": [],
+  "ignorePaths": [
+    "typings",
+    "node_modules",
+    ".next",
+    "dist"
+  ]
+}

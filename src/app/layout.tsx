@@ -1,17 +1,12 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
+import { Geist } from 'next/font/google';
+import '@/styles/globals.css';
 import { Theme } from '@radix-ui/themes';
+import { ThemeProvider } from 'next-themes';
 
 // Add the Geist font to the page and assign it to the CSS variable --font-geist-sans
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-//Add the Geist font to the page and assign it to the CSS variable --font-geist-mono
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
   subsets: ['latin'],
 });
 
@@ -30,11 +25,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Theme>{children}</Theme>
+    <html
+      lang="pl"
+      suppressHydrationWarning
+      className={`${geistSans.variable} antialiased`}
+    >
+      <body>
+        <ThemeProvider attribute="class">
+          <Theme>{children}</Theme>
+        </ThemeProvider>
       </body>
     </html>
   );

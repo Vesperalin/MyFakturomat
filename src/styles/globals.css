@@ -1,0 +1,50 @@
+@import 'tailwindcss';
+@import '@radix-ui/themes/styles.css';
+@import './custom.css';
+
+/* Design tokens */
+:root {
+  --color-primary-background: #fafbfc;
+  --color-secondary-background: #fefefe;
+  --color-tertiary-background: #f3f6fc;
+
+  --color-primary-accent: #1a6ef4;
+  --color-primary-accent-hover: #084cd2;
+
+  --color-primary-border: #e5e7eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary-background: #03060a;
+    --color-secondary-background: #030609;
+    --color-tertiary-background: #0f121a;
+
+    /* --color-primary-accent: - no need for dark accent for this one */
+    /* --color-primary-accent-hover - no need for dark accent for this one */
+
+    --color-primary-border: #293341;
+  }
+}
+
+/* Tailwind token mapping */
+@theme {
+  --color-primary-background: var(--color-primary-background);
+  --color-secondary-background: var(--color-secondary-background);
+  --color-tertiary-background: var(--color-tertiary-background);
+
+  --color-primary-accent: var(--color-primary-accent);
+  /* --color-primary-accent-hover: - no need for this one for now*/
+
+  --color-primary-border: var(--color-primary-border);
+}
+
+/* Radix override */
+.radix-themes {
+  --default-font-family: var(--font-geist-sans);
+  --color-background: var(--color-primary-background);
+  --color-panel-solid: var(--color-secondary-background);
+  --accent-9: var(--color-primary-accent);
+  --accent-10: var(--color-primary-accent-hover);
+  --accent-a11: var(--color-primary-accent);
+}
