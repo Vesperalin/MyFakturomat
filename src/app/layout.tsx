@@ -3,6 +3,8 @@ import { Geist } from 'next/font/google';
 import '@/styles/globals.css';
 import { Theme } from '@radix-ui/themes';
 import { ThemeProvider } from 'next-themes';
+import { SessionProviderWrapper } from '@/components/global';
+import { ReactNode } from 'react';
 
 // Add the Geist font to the page and assign it to the CSS variable --font-geist-sans
 const geistSans = Geist({
@@ -19,11 +21,7 @@ export const metadata: Metadata = {
 // starting point - change only things in return statement
 // children - will render different routes
 // everything inside <html> but outside {children} will appear on every page
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="pl"
@@ -32,7 +30,9 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider attribute="class">
-          <Theme>{children}</Theme>
+          <Theme>
+            <SessionProviderWrapper>{children}</SessionProviderWrapper>
+          </Theme>
         </ThemeProvider>
       </body>
     </html>

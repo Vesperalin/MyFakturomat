@@ -4,9 +4,12 @@ services:
     # says: build image from current directory (.) using Dockerfile.dev
       context: .
       dockerfile: Dockerfile
+    command: sh -c "npx prisma migrate deploy && npm run dev"
     ports:
     # maps docker port 3000 to local port 3000
       - "3000:3000"
+    env_file:
+      - .env
     volumes:
       # Mounts my local project to the container's working directory (i.e. the one from WORKDIR)
       - .:/my-fakturomat
