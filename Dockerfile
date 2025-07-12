@@ -12,6 +12,8 @@ RUN npm ci
 # copies rest of the files
 COPY . .
 
+RUN npx prisma generate
+
 # exposes on port 3000 - it won't be opened yet
 EXPOSE 3000
 

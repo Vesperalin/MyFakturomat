@@ -13,7 +13,6 @@ import {
   IconButton,
   Separator,
   Text,
-  Button,
 } from '@radix-ui/themes';
 import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons';
 import Link from 'next/link';
@@ -21,13 +20,11 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { navLinks } from './config';
+import LogoutButton from './LogoutButton/LogoutButton';
 
-export function Navbar() {
+export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(false);
-
-  // TODO extract
-  const LogoutButton = <Button>Wyloguj</Button>;
 
   return (
     <header>
@@ -38,7 +35,12 @@ export function Navbar() {
       >
         <Flex justify="between" align="center">
           <Flex gap="3" align="center">
-            <Image src="/logo.svg" alt="logo" width={40} height={40} />
+            <Image
+              src="/logo.svg"
+              alt="MyFakturomat-logo"
+              width={40}
+              height={40}
+            />
             <Heading size="6" asChild>
               <Link href="/">MyFakturomat</Link>
             </Heading>
@@ -67,7 +69,9 @@ export function Navbar() {
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
-                <NavigationMenuLink asChild>{LogoutButton}</NavigationMenuLink>
+                <NavigationMenuLink asChild>
+                  <LogoutButton />
+                </NavigationMenuLink>
               </NavigationMenuList>
             </NavigationMenu>
           </Box>
@@ -106,7 +110,7 @@ export function Navbar() {
                   <Link href={item.href}>{item.label}</Link>
                 </Text>
               ))}
-              {LogoutButton}
+              <LogoutButton />
             </Flex>
           </Box>
         )}
