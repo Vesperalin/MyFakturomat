@@ -48,3 +48,8 @@
   --accent-10: var(--color-primary-accent-hover);
   --accent-a11: var(--color-primary-accent);
 }
+
+/* Debug - sprawdź czy czcionka jest używana */
+body {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}

@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
 
   // If user not logged in - redirect to login page
   if (!token) {
-    return NextResponse.redirect(new URL('/signIn', request.url));
+    return NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
   return NextResponse.next();
@@ -19,6 +19,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next|favicon.ico|signIn|.*\\.svg$|.*\\.png$|.*\\.jpg$|.*\\.css$|.*\\.js$).*)',
+    '/((?!api|_next|favicon.ico|sign-in|sign-out|.*\\.svg$|.*\\.png$|.*\\.jpg$|.*\\.css$|.*\\.js$).*)',
   ],
 };

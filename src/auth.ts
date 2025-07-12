@@ -25,6 +25,10 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  pages: {
+    signIn: '/sign-in',
+    signOut: '/sign-out',
+  },
   secret: process.env.NEXTAUTH_SECRET,
   theme: {
     colorScheme: 'auto',

@@ -10,6 +10,7 @@ import { ReactNode } from 'react';
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
+  preload: false, // Wyłącz automatyczny preload
 });
 
 //metadata for the entire app (good for SEO) - each page can have its own
