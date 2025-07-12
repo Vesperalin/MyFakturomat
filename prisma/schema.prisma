@@ -14,6 +14,7 @@ model User {
   emailVerified DateTime?
   image         String?
   accounts      Account[]
+  Company       Company?
 }
 
 model Account {
@@ -32,4 +33,19 @@ model Account {
   user              User    @relation(fields: [userId], references: [id])
 
   @@unique([provider, providerAccountId])
+}
+
+model Company {
+  id           String  @id @default(cuid())
+  name         String
+  nip          String
+  street       String
+  city         String
+  postal_code  String
+  bank_account String
+  currency     String
+  country      String
+  paying_vat   Boolean
+  userId       String  @unique
+  user         User    @relation(fields: [userId], references: [id])
 }
