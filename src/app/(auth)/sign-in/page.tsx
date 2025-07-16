@@ -18,7 +18,7 @@ export default function SignIn() {
   }, [status, router]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="flex items-center justify-center relative w-full h-full">
       <AnimatedBackground />
       <div className="relative">
         {status !== 'unauthenticated' ? (

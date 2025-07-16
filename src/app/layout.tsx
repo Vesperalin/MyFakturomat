@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
 import '@/styles/globals.css';
-import { Theme } from '@radix-ui/themes';
+import { Container, Text, Theme } from '@radix-ui/themes';
 import { ThemeProvider } from 'next-themes';
-import { SessionProviderWrapper } from '@/components/global';
+import { Navbar, SessionProviderWrapper } from '@/components/global';
 import { ReactNode } from 'react';
 
 // Add the Geist font to the page and assign it to the CSS variable --font-geist-sans
@@ -32,7 +32,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <ThemeProvider attribute="class">
           <Theme>
-            <SessionProviderWrapper>{children}</SessionProviderWrapper>
+            <SessionProviderWrapper>
+              <div className="min-h-screen max-w-screen overflow-hidden grid grid-rows-[auto_1fr_auto]">
+                <Navbar />
+                <main className="[&_div.rt-Container]:h-full [&_div.rt-ContainerInner]:h-full">
+                  <Container my="4" mx="2">
+                    {children}
+                  </Container>
+                </main>
+                <footer>
+                  <Container py="4" mx="2" className="text-center">
+                    <Text size="1">© 2025 Klaudia Błażyczek</Text>
+                  </Container>
+                </footer>
+              </div>
+            </SessionProviderWrapper>
           </Theme>
         </ThemeProvider>
       </body>

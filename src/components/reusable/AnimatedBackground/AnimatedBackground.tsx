@@ -35,7 +35,7 @@ export const AnimatedBackground = () => {
 
   return (
     <div
-      className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
+      className="absolute w-full h-auto overflow-hidden pointer-events-none"
       aria-hidden="true"
     >
       <svg viewBox="0 0 900 600" width="100%" height="100%">

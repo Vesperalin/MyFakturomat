@@ -19,12 +19,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { navLinks } from './config';
+import { navLinks } from './Navbar.config';
 import LogoutButton from './LogoutButton/LogoutButton';
+import LoginButton from './LoginButton/LoginButton';
+import { useSession } from 'next-auth/react';
 
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(false);
+  const { data: session } = useSession();
+  const isLoggedIn = !!session?.user;
+
+  const visibleLinks = navLinks.filter((link) => link.public || isLoggedIn);
 
   return (
     <header>
@@ -50,7 +56,7 @@ export default function Navbar() {
           <Box display={{ initial: 'none', md: 'block' }}>
             <NavigationMenu>
               <NavigationMenuList style={{ display: 'flex', gap: '10px' }}>
-                {navLinks.map((item) => (
+                {visibleLinks.map((item) => (
                   <NavigationMenuItem
                     key={item.href}
                     className="flex justify-center content-center"
@@ -69,9 +75,15 @@ export default function Navbar() {
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
-                <NavigationMenuLink asChild>
-                  <LogoutButton />
-                </NavigationMenuLink>
+                {isLoggedIn ? (
+                  <NavigationMenuLink asChild>
+                    <LogoutButton />
+                  </NavigationMenuLink>
+                ) : (
+                  <NavigationMenuLink asChild>
+                    <LoginButton />
+                  </NavigationMenuLink>
+                )}
               </NavigationMenuList>
             </NavigationMenu>
           </Box>
@@ -95,7 +107,7 @@ export default function Navbar() {
           <Box display={{ md: 'none' }} mt="3">
             <Separator mb="3" />
             <Flex direction="column" gap="3">
-              {navLinks.map((item) => (
+              {visibleLinks.map((item) => (
                 <Text
                   key={item.href}
                   size="3"
@@ -110,7 +122,7 @@ export default function Navbar() {
                   <Link href={item.href}>{item.label}</Link>
                 </Text>
               ))}
-              <LogoutButton />
+              {isLoggedIn ? <LogoutButton /> : <LoginButton />}
             </Flex>
           </Box>
         )}

@@ -8,7 +8,7 @@ export default function SignOut() {
   const router = useRouter();
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="flex items-center justify-center relative w-full h-full">
       <AnimatedBackground />
       <div className="relative">
         <Flex
