@@ -11,6 +11,8 @@
   --color-primary-accent: #1a6ef4;
   --color-primary-accent-hover: #084cd2;
 
+  --color-error: #ff0000;
+
   --color-primary-border: #e5e7eb;
 }
 
@@ -22,6 +24,8 @@
 
     /* --color-primary-accent: - no need for dark accent for this one */
     /* --color-primary-accent-hover - no need for dark accent for this one */
+
+    --color-error: #e70000;
 
     --color-primary-border: #293341;
   }
@@ -35,6 +39,8 @@
 
   --color-primary-accent: var(--color-primary-accent);
   /* --color-primary-accent-hover: - no need for this one for now*/
+
+  --color-error: var(--color-error);
 
   --color-primary-border: var(--color-primary-border);
 }

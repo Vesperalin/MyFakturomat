@@ -1,9 +1,7 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
 import Google from 'next-auth/providers/google';
 import type { NextAuthOptions } from 'next-auth';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 // TODO add logging with email and password
 export const authOptions: NextAuthOptions = {
@@ -19,7 +17,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, token }) {
       if (session.user && token && token.sub) {
-        console.log(token);
         session.user.id = token.sub;
       }
       return session;

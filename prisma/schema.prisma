@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Currency {
+  PLN
+  USD
+  EUR
+}
+
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -36,16 +42,16 @@ model Account {
 }
 
 model Company {
-  id           String  @id @default(cuid())
-  name         String
-  nip          String
-  street       String
-  city         String
-  postal_code  String
-  bank_account String
-  currency     String
-  country      String
+  id           String   @id @default(cuid())
+  name         String   @db.VarChar(512)
+  nip          String   @db.VarChar(10)
+  street       String   @db.VarChar(150)
+  city         String   @db.VarChar(85)
+  postal_code  String   @db.VarChar(16)
+  bank_account String   @db.VarChar(50)
+  currency     Currency
+  country      String   @db.VarChar(60)
   paying_vat   Boolean
-  userId       String  @unique
-  user         User    @relation(fields: [userId], references: [id])
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id])
 }
