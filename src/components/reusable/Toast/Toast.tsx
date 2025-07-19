@@ -1,10 +1,11 @@
 'use client';
 
-import * as RadixToast from '@radix-ui/react-toast';
+import { Toast as RadixToast } from 'radix-ui';
 import { useEffect, useState } from 'react';
-import { ToastProps } from './types';
+import { ToastProps } from './Toast.types';
+import Cookies from 'js-cookie';
 
-export function Toast({ message, type }: ToastProps) {
+export function Toast({ message, type, cookieNameToClearOnClose }: ToastProps) {
   const [open, setOpen] = useState<boolean>(true);
 
   useEffect(() => {
@@ -20,6 +21,12 @@ export function Toast({ message, type }: ToastProps) {
       ? 'Dane zostały zapisane'
       : 'Wystąpił błąd zapisu');
 
+  const handleOnClose = () => {
+    if (cookieNameToClearOnClose) {
+      Cookies.remove(cookieNameToClearOnClose, { path: '' });
+    }
+  };
+
   return (
     <RadixToast.Provider swipeDirection="right">
       <RadixToast.Root
@@ -32,7 +39,9 @@ export function Toast({ message, type }: ToastProps) {
           {toastMessage}
         </RadixToast.Description>
         <RadixToast.Close asChild>
-          <button className="ml-2 text-white">✕</button>
+          <button className="ml-2 text-white" onClick={handleOnClose}>
+            ✕
+          </button>
         </RadixToast.Close>
       </RadixToast.Root>
       <RadixToast.Viewport className="fixed bottom-4 right-4 flex flex-col gap-2 w-[300px] z-50" />

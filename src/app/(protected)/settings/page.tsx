@@ -12,19 +12,10 @@ import { authOptions } from '@/auth';
 import { prisma } from '@/lib/prisma';
 import { currencies } from './config';
 import { saveCompanySettings } from '@/actions/saveCompany';
-import { Toast } from '@/components/reusable';
-import { cookies } from 'next/headers';
 
 export default async function Settings() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
-  const showToastOnSuccess =
-    (await cookies()).get('company-saved')?.value === 'true';
-
-  // TODO - jak niezalogowany to zrobić jakąś akcję
-  if (!userId) {
-    return <p>Nie jesteś zalogowany</p>;
-  }
 
   const existingCompanyData = await prisma.company.findUnique({
     where: { userId },
@@ -208,12 +199,6 @@ export default async function Settings() {
         </Form.Submit>
 
         <Text>* - pole obowiązkowe</Text>
-        {showToastOnSuccess && (
-          <Toast
-            type="save-success"
-            message="Pomyślnie zapisano dane twojej firmy"
-          />
-        )}
       </Form.Root>
     </>
   );
