@@ -1,48 +1,38 @@
 'use client';
 
 import { Toast as RadixToast } from 'radix-ui';
-import { useEffect, useState } from 'react';
 import { ToastProps } from './Toast.types';
-import Cookies from 'js-cookie';
+import { Flex } from '@radix-ui/themes';
 
-export function Toast({ message, type, cookieNameToClearOnClose }: ToastProps) {
-  const [open, setOpen] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (type) {
-      setOpen(true);
-    }
-  }, [type]);
-
-  const toastTitle = type === 'save-success' ? 'Zapisano' : 'Nie zapisano';
-  const toastMessage =
-    message ||
-    (type === 'save-success'
-      ? 'Dane zostały zapisane'
-      : 'Wystąpił błąd zapisu');
-
-  const handleOnClose = () => {
-    if (cookieNameToClearOnClose) {
-      Cookies.remove(cookieNameToClearOnClose, { path: '' });
-    }
-  };
-
+export function Toast({
+  isOpen,
+  setIsOpen,
+  title,
+  type,
+  message,
+  onCloseClick,
+}: ToastProps) {
   return (
-    <RadixToast.Provider swipeDirection="right">
+    <RadixToast.Provider label={`${type}-notification`} duration={2500}>
       <RadixToast.Root
-        open={open}
-        onOpenChange={setOpen}
-        className="bg-green-600 text-white px-4 py-2 rounded shadow-md data-[state=open]:animate-slideIn data-[state=closed]:animate-hide"
+        duration={2500}
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        className={`${isOpen ? 'animate-slideIn' : 'animate-slideOut'} ${type === 'success' && 'bg-success'} ${type === 'error' && 'bg-error'} text-white px-4 py-2 rounded shadow-md`}
       >
-        <RadixToast.Title className="font-bold">{toastTitle}</RadixToast.Title>
-        <RadixToast.Description className="text-sm">
-          {toastMessage}
-        </RadixToast.Description>
-        <RadixToast.Close asChild>
-          <button className="ml-2 text-white" onClick={handleOnClose}>
-            ✕
-          </button>
-        </RadixToast.Close>
+        <Flex direction="column" gapY="1">
+          <Flex justify="between">
+            <RadixToast.Title className="font-bold text-lg">
+              {title}
+            </RadixToast.Title>
+            <RadixToast.Close asChild>
+              <button className="ml-2 text-white" onClick={onCloseClick}>
+                ✕
+              </button>
+            </RadixToast.Close>
+          </Flex>
+          <RadixToast.Description>{message}</RadixToast.Description>
+        </Flex>
       </RadixToast.Root>
       <RadixToast.Viewport className="fixed bottom-4 right-4 flex flex-col gap-2 w-[300px] z-50" />
     </RadixToast.Provider>

@@ -54,7 +54,7 @@ export const Navbar = () => {
           {/* Desktop navigation */}
           <Box display={{ initial: 'none', md: 'block' }}>
             <NavigationMenu>
-              <NavigationMenuList style={{ display: 'flex', gap: '10px' }}>
+              <NavigationMenuList style={{ display: 'flex', gap: '6px' }}>
                 {visibleLinks.map((item) => (
                   <NavigationMenuItem
                     key={item.href}

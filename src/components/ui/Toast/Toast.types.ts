@@ -1,5 +1,10 @@
+export type ToastType = 'success' | 'error' | undefined;
+
 export interface ToastProps {
-  message?: string;
-  type: 'save-success' | 'save-error';
-  cookieNameToClearOnClose?: string;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  title: string;
+  type: ToastType;
+  message: string;
+  onCloseClick?: () => void;
 }
