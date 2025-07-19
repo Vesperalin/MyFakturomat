@@ -66,8 +66,7 @@ export const saveCompanySettings = async (formData: FormData) => {
 
     (await cookies()).set('company-saved', 'success', { path: '/settings' });
     revalidatePath('/settings');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
+  } catch {
     (await cookies()).set('company-saved', 'error', {
       path: '/settings',
     });

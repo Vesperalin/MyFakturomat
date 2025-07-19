@@ -28,6 +28,7 @@
     /* --color-primary-accent-hover - no need for dark accent for this one */
 
     --color-error: #cf0000;
+    /* --color-success - no need for dark accent for this one */
 
     --color-primary-border: #293341;
   }
