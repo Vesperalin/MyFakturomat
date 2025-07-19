@@ -1,4 +1,4 @@
-export const navLinks = [
+export const paths = [
   { href: '/', label: 'Pulpit', public: false },
   { href: '/invoices', label: 'Faktury', public: false },
   { href: '/clients', label: 'Baza klientów', public: false },

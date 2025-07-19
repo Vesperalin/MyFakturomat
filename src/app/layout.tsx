@@ -3,7 +3,8 @@ import { Geist } from 'next/font/google';
 import '@/styles/globals.css';
 import { Container, Text, Theme } from '@radix-ui/themes';
 import { ThemeProvider } from 'next-themes';
-import { Navbar, SessionProviderWrapper } from '@/components/global';
+import { SessionProviderWrapper } from '@/components/wrappers';
+import { Navbar } from '@/components/layout';
 import { ReactNode } from 'react';
 
 // Add the Geist font to the page and assign it to the CSS variable --font-geist-sans

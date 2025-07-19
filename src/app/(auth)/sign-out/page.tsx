@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatedBackground } from '@/components/reusable';
+import { AnimatedBackground } from '@/components/ui';
 import { Button, Flex, Heading } from '@radix-ui/themes';
 import { useRouter } from 'next/navigation';
 

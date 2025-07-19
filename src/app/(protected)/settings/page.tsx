@@ -10,8 +10,8 @@ import {
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { prisma } from '@/lib/prisma';
-import { currencies } from './config';
 import { saveCompanySettings } from '@/actions/saveCompany';
+import { currencies } from '@/configs/currencies.config';
 
 export default async function Settings() {
   const session = await getServerSession(authOptions);

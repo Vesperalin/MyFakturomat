@@ -19,18 +19,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { navLinks } from './Navbar.config';
-import LogoutButton from './LogoutButton/LogoutButton';
-import LoginButton from './LoginButton/LoginButton';
+import { LoginButton, LogoutButton } from './components';
 import { useSession } from 'next-auth/react';
+import { paths } from '@/configs/paths.config';
 
-export default function Navbar() {
+export const Navbar = () => {
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(false);
   const { data: session } = useSession();
   const isLoggedIn = !!session?.user;
 
-  const visibleLinks = navLinks.filter((link) => link.public || isLoggedIn);
+  const visibleLinks = paths.filter((link) => link.public || isLoggedIn);
 
   return (
     <header>
@@ -129,4 +128,4 @@ export default function Navbar() {
       </Box>
     </header>
   );
-}
+};

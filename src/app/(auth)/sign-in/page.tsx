@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Flex, Heading, Spinner, Text } from '@radix-ui/themes';
 import Image from 'next/image';
-import { AnimatedBackground } from '@/components/reusable';
+import { AnimatedBackground } from '@/components/ui';
 
 export default function SignIn() {
   const { status } = useSession();
