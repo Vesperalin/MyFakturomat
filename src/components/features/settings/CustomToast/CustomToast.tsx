@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 export const CustomToast = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const saveCompanyCookie = Cookies.get('company-saved');
+  const isSuccess = saveCompanyCookie === 'success';
 
   useEffect(() => {
     if (saveCompanyCookie) {
@@ -23,9 +24,13 @@ export const CustomToast = () => {
     <Toast
       isOpen={isOpen}
       setIsOpen={handleSetIsOpen}
-      title="Zapisano"
+      title={isSuccess ? 'Zapisano' : 'Nie zapisano'}
       type={saveCompanyCookie as ToastType}
-      message="Zapisano zmiany w ustawieniach."
+      message={
+        isSuccess
+          ? 'Zapisano zmiany w ustawieniach.'
+          : 'Nie zapisano zmian w ustawieniach.'
+      }
       onCloseClick={() => {
         Cookies.remove('company-saved', { path: '/settings' });
       }}

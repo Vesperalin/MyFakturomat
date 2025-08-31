@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <div className="min-h-screen max-w-screen overflow-hidden grid grid-rows-[auto_1fr_auto]">
                 <Navbar />
                 <main className="[&_div.rt-Container]:h-full [&_div.rt-ContainerInner]:h-full">
-                  <Container my="4" mx="2">
+                  <Container my="4" mx="2" px="3">
                     {children}
                   </Container>
                 </main>

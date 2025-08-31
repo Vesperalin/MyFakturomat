@@ -10,6 +10,7 @@ import { AnimatedBackground } from '@/components/ui';
 export default function SignIn() {
   const { status } = useSession();
   const router = useRouter();
+  console.log(status);
 
   useEffect(() => {
     if (status === 'authenticated') {

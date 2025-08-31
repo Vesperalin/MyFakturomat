@@ -17,7 +17,7 @@ import { currencies } from '@/configs/currencies.config';
 import { CustomToast } from '@/components/features/settings';
 import { FormFieldset } from '@/components/ui';
 
-// made it as server component to try different approach
+// made it as server component to try different this approach
 export default async function Settings() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
