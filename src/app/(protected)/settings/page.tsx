@@ -28,7 +28,7 @@ export default async function Settings() {
   return (
     <>
       <PageTitle>Ustawienia twojej firmy</PageTitle>
-      <Form.Root action={saveCompanySettings} className="mb-5">
+      <Form.Root action={saveCompanySettings} className="mb-5 mt-5">
         <FormFieldset legend="Dane firmy">
           <FormItem
             itemName="name"
