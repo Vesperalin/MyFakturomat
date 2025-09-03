@@ -2,7 +2,6 @@ import { Form } from 'radix-ui';
 import {
   Button,
   Flex,
-  Heading,
   Select,
   Switch,
   Text,
@@ -15,7 +14,7 @@ import { prisma } from '@/lib/prisma';
 import { saveCompanySettings } from '@/actions/saveCompany';
 import { currencies } from '@/configs/currencies.config';
 import { CustomToast } from '@/components/features/settings';
-import { FormFieldset } from '@/components/ui';
+import { FormFieldset, FormHeading, FormItem } from '@/components/ui';
 
 // made it as server component to try different this approach
 export default async function Settings() {
@@ -28,162 +27,171 @@ export default async function Settings() {
 
   return (
     <>
-      <Heading as="h2" size="8">
-        Ustawienia twojej firmy
-      </Heading>
+      <FormHeading>Ustawienia twojej firmy</FormHeading>
       <Form.Root action={saveCompanySettings} className="mb-5">
         <FormFieldset legend="Dane firmy">
-          <Form.Field name="name" className="my-3">
-            <Form.Label>Nazwa*</Form.Label>
-            <Form.Control asChild>
-              <TextField.Root
-                defaultValue={existingCompanyData?.name || undefined}
-                size="3"
-                radius="medium"
-                placeholder="Podaj nazwę"
-                required
-                maxLength={512}
-              />
-            </Form.Control>
-            <Form.Message className="text-error text-sm" match="valueMissing">
-              Nazwa jest obowiązkowa
-            </Form.Message>
-            <Form.Message className="text-error text-sm" match="tooLong">
-              Nazwa jest zbyt długa
-            </Form.Message>
-          </Form.Field>
-
-          <Form.Field name="nip" className="my-3 max-w-xs">
-            <Form.Label>NIP*</Form.Label>
-            <Form.Control asChild>
-              <TextField.Root
-                defaultValue={existingCompanyData?.nip || undefined}
-                size="3"
-                radius="medium"
-                placeholder="Podaj NIP"
-                type="number"
-                required
-                min={0}
-                step={1}
-                max={999999999}
-              />
-            </Form.Control>
-            <Form.Message className="text-error text-sm" match="valueMissing">
-              NIP jest obowiązkowy
-            </Form.Message>
-            <Form.Message className="text-error text-sm" match="rangeOverflow">
-              NIP jest zbyt długi
-            </Form.Message>
-            <Form.Message className="text-error text-sm" match="rangeUnderflow">
-              NIP jest zbyt krótki
-            </Form.Message>
-            <Form.Message className="text-error text-sm" match="stepMismatch">
-              NIP powinien składać się tylko z cyfr
-            </Form.Message>
-            <Form.Message className="text-error text-sm" match="badInput">
-              NIP powinien składać się tylko z cyfr
-            </Form.Message>
-          </Form.Field>
+          <FormItem
+            itemName="name"
+            label="Nazwa"
+            isObligatory
+            possibleErrors={[
+              { name: 'Nazwa jest obowiązkowa', match: 'valueMissing' },
+              { name: 'Nazwa jest zbyt długa', match: 'tooLong' },
+            ]}
+          >
+            <TextField.Root
+              defaultValue={existingCompanyData?.name || undefined}
+              size="3"
+              radius="medium"
+              placeholder="Podaj nazwę"
+              required
+              maxLength={512}
+            />
+          </FormItem>
+          <FormItem
+            itemName="nip"
+            label="NIP"
+            isObligatory
+            possibleErrors={[
+              { name: 'NIP jest obowiązkowy', match: 'valueMissing' },
+              { name: 'NIP jest zbyt długi', match: 'rangeOverflow' },
+              { name: 'NIP jest zbyt krótki', match: 'rangeUnderflow' },
+              {
+                name: 'NIP powinien składać się tylko z cyfr',
+                match: 'stepMismatch',
+              },
+              {
+                name: 'NIP powinien składać się tylko z cyfr',
+                match: 'badInput',
+              },
+            ]}
+          >
+            <TextField.Root
+              defaultValue={existingCompanyData?.nip || undefined}
+              size="3"
+              radius="medium"
+              placeholder="Podaj NIP"
+              type="number"
+              required
+              min={0}
+              step={1}
+              max={999999999}
+            />
+          </FormItem>
         </FormFieldset>
 
         <FormFieldset legend="Adres">
-          <Form.Field name="street" className="my-3">
-            <Form.Label>Ulica i numer lokalu*</Form.Label>
-            <Form.Control asChild>
-              <TextField.Root
-                defaultValue={existingCompanyData?.street || undefined}
-                size="3"
-                radius="medium"
-                placeholder="Podaj ulicę i numer lokalu"
-                required
-              />
-            </Form.Control>
-            <Form.Message className="text-error text-sm" match="valueMissing">
-              Ulica i numer lokalu są obowiązkowe
-            </Form.Message>
-          </Form.Field>
-
+          <FormItem
+            itemName="street"
+            label="Ulica i numer lokalu"
+            isObligatory
+            possibleErrors={[
+              {
+                name: 'Ulica i numer lokalu są obowiązkowe',
+                match: 'valueMissing',
+              },
+            ]}
+          >
+            <TextField.Root
+              defaultValue={existingCompanyData?.street || undefined}
+              size="3"
+              radius="medium"
+              placeholder="Podaj ulicę i numer lokalu"
+              required
+            />
+          </FormItem>
           <Flex wrap="wrap" gapX="6">
-            <Form.Field name="city" className="my-3 max-w-lg w-full">
-              <Form.Label>Miasto*</Form.Label>
-              <Form.Control asChild>
-                <TextField.Root
-                  defaultValue={existingCompanyData?.city || undefined}
-                  size="3"
-                  radius="medium"
-                  placeholder="Podaj miasto"
-                  required
-                />
-              </Form.Control>
-              <Form.Message className="text-error text-sm" match="valueMissing">
-                Miasto jest obowiązkowe
-              </Form.Message>
-            </Form.Field>
-            <Form.Field name="postal_code" className="my-3 max-w-xs w-full">
-              <Form.Label>Kod pocztowy*</Form.Label>
-              <Form.Control asChild>
-                <TextField.Root
-                  defaultValue={existingCompanyData?.postal_code || undefined}
-                  size="3"
-                  radius="medium"
-                  placeholder="Podaj kod pocztowy np. 54-123"
-                  pattern="\d{2}-\d{3}"
-                  required
-                />
-              </Form.Control>
-              <Form.Message className="text-error text-sm" match="valueMissing">
-                Kod pocztowy jest obowiązkowy
-              </Form.Message>
-              <Form.Message
-                className="text-error text-sm"
-                match="patternMismatch"
-              >
-                Kod pocztowy musi mieć format XX-XXX (w miejsce X wstaw cyfrę)
-              </Form.Message>
-            </Form.Field>
-          </Flex>
-
-          <Form.Field name="country" className="my-3 max-w-lg">
-            <Form.Label>Kraj*</Form.Label>
-            <Form.Control asChild>
+            <FormItem
+              itemName="city"
+              label="Miasto"
+              isObligatory
+              possibleErrors={[
+                {
+                  name: 'Miasto jest obowiązkowe',
+                  match: 'valueMissing',
+                },
+              ]}
+            >
               <TextField.Root
-                defaultValue={existingCompanyData?.country || undefined}
+                defaultValue={existingCompanyData?.city || undefined}
                 size="3"
                 radius="medium"
-                placeholder="Podaj kraj"
+                placeholder="Podaj miasto"
                 required
-                pattern="^[^0-9]*$"
               />
-            </Form.Control>
-            <Form.Message className="text-error text-sm" match="valueMissing">
-              Kraj jest obowiązkowy
-            </Form.Message>
-            <Form.Message
-              className="text-error text-sm"
-              match="patternMismatch"
+            </FormItem>
+            <FormItem
+              itemName="postal_code"
+              label="Kod pocztowy"
+              isObligatory
+              possibleErrors={[
+                {
+                  name: 'Kod pocztowy jest obowiązkowy',
+                  match: 'valueMissing',
+                },
+                {
+                  name: 'Kod pocztowy musi mieć format XX-XXX (w miejsce X wstaw cyfrę)',
+                  match: 'patternMismatch',
+                },
+              ]}
             >
-              Kraj nie może zawierać cyfr
-            </Form.Message>
-          </Form.Field>
+              <TextField.Root
+                defaultValue={existingCompanyData?.postal_code || undefined}
+                size="3"
+                radius="medium"
+                placeholder="Podaj kod pocztowy np. 54-123"
+                pattern="\d{2}-\d{3}"
+                required
+              />
+            </FormItem>
+          </Flex>
+          <FormItem
+            itemName="country"
+            label="Kraj"
+            isObligatory
+            possibleErrors={[
+              {
+                name: 'Kraj jest obowiązkowy',
+                match: 'valueMissing',
+              },
+              {
+                name: 'Kraj nie może zawierać cyfr',
+                match: 'patternMismatch',
+              },
+            ]}
+          >
+            <TextField.Root
+              defaultValue={existingCompanyData?.country || undefined}
+              size="3"
+              radius="medium"
+              placeholder="Podaj kraj"
+              required
+              pattern="^[^0-9]*$"
+            />
+          </FormItem>
         </FormFieldset>
 
         <FormFieldset legend="Finanse">
           <Flex wrap="wrap" gapX="6" align="center">
-            <Form.Field name="bank_account" className="my-3 max-w-lg w-full">
-              <Form.Label>Numer konta bankowego*</Form.Label>
-              <Form.Control asChild>
-                <TextField.Root
-                  defaultValue={existingCompanyData?.bank_account || undefined}
-                  size="3"
-                  radius="medium"
-                  placeholder="Podaj numer konta bankowego"
-                  required
-                />
-              </Form.Control>
-              <Form.Message className="text-error text-sm" match="valueMissing">
-                Numer konta bankowego jest obowiązkowy
-              </Form.Message>
-            </Form.Field>
+            <FormItem
+              itemName="bank_account"
+              label="Numer konta bankowego"
+              isObligatory
+              possibleErrors={[
+                {
+                  name: 'Numer konta bankowego jest obowiązkowy',
+                  match: 'valueMissing',
+                },
+              ]}
+            >
+              <TextField.Root
+                defaultValue={existingCompanyData?.bank_account || undefined}
+                size="3"
+                radius="medium"
+                placeholder="Podaj numer konta bankowego"
+                required
+              />
+            </FormItem>
 
             <Form.Field name="currency" className="my-3 max-w-3xs w-full">
               <Flex direction="column">
