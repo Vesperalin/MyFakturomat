@@ -14,7 +14,7 @@ import { prisma } from '@/lib/prisma';
 import { saveCompanySettings } from '@/actions/saveCompany';
 import { currencies } from '@/configs/currencies.config';
 import { CustomToast } from '@/components/features/settings';
-import { FormFieldset, FormHeading, FormItem } from '@/components/ui';
+import { FormFieldset, FormItem, PageTitle } from '@/components/ui';
 
 // made it as server component to try different this approach
 export default async function Settings() {
@@ -27,7 +27,7 @@ export default async function Settings() {
 
   return (
     <>
-      <FormHeading>Ustawienia twojej firmy</FormHeading>
+      <PageTitle>Ustawienia twojej firmy</PageTitle>
       <Form.Root action={saveCompanySettings} className="mb-5">
         <FormFieldset legend="Dane firmy">
           <FormItem

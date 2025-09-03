@@ -1,7 +1,7 @@
 import { Heading } from '@radix-ui/themes';
-import { FormHeadingProps } from './FormHeading.types';
+import { PageTitleProps } from './PageTitle.types';
 
-export const FormHeading = ({ children }: FormHeadingProps) => {
+export const PageTitle = ({ children }: PageTitleProps) => {
   return (
     <Heading as="h2" size="8">
       {children}
