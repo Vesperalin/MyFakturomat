@@ -87,7 +87,6 @@ export default async function Settings() {
         </FormFieldset>
 
         <FormFieldset legend="Adres">
-          <Flex></Flex>
           <Form.Field name="street" className="my-3">
             <Form.Label>Ulica i numer lokalu*</Form.Label>
             <Form.Control asChild>
