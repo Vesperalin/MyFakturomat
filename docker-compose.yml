@@ -4,7 +4,7 @@ services:
     # says: build image from current directory (.) using Dockerfile.dev
       context: .
       dockerfile: Dockerfile
-    command: sh -c "npx prisma migrate deploy && npm run dev"
+    command: sh -c "npx prisma migrate deploy && npx prisma generate && npm run dev"
     ports:
     # maps docker port 3000 to local port 3000
       - "3000:3000"

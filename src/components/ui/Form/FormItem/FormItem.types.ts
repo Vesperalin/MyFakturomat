@@ -9,5 +9,6 @@ export interface FormItemProps {
   itemName: string;
   label: string;
   isObligatory: boolean;
-  possibleErrors: PossibleError[];
+  possibleErrors?: PossibleError[];
+  className?: string | undefined;
 }

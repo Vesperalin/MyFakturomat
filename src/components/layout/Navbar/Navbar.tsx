@@ -63,7 +63,7 @@ export const Navbar = () => {
                     <NavigationMenuLink
                       asChild
                       className={`rounded-md font-medium ${
-                        pathname === item.href
+                        pathname.includes(item.href)
                           ? 'bg-tertiary-background text-primary-accent'
                           : 'hover:bg-tertiary-background'
                       }`}

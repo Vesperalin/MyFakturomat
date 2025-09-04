@@ -1,20 +1,12 @@
 import { Form } from 'radix-ui';
-import {
-  Button,
-  Flex,
-  Select,
-  Switch,
-  Text,
-  TextField,
-} from '@radix-ui/themes';
+import { Button, Flex, Switch, Text, TextField } from '@radix-ui/themes';
 import { getServerSession } from 'next-auth';
-import Image from 'next/image';
 import { authOptions } from '@/auth';
 import { prisma } from '@/lib/prisma';
 import { saveCompanySettings } from '@/actions/saveCompany';
-import { currencies } from '@/configs/currencies.config';
 import { CustomToast } from '@/components/features/settings';
 import { FormFieldset, FormItem, PageTitle } from '@/components/ui';
+import { CurrencySelect } from '@/components/features/common';
 
 // made it as server component to try different this approach
 export default async function Settings() {
@@ -36,7 +28,10 @@ export default async function Settings() {
             isObligatory
             possibleErrors={[
               { name: 'Nazwa jest obowiązkowa', match: 'valueMissing' },
-              { name: 'Nazwa jest zbyt długa', match: 'tooLong' },
+              {
+                name: 'Nazwa jest zbyt długa',
+                match: 'tooLong',
+              },
             ]}
           >
             <TextField.Root
@@ -48,14 +43,21 @@ export default async function Settings() {
               maxLength={512}
             />
           </FormItem>
+
           <FormItem
             itemName="nip"
             label="NIP"
             isObligatory
             possibleErrors={[
               { name: 'NIP jest obowiązkowy', match: 'valueMissing' },
-              { name: 'NIP jest zbyt długi', match: 'rangeOverflow' },
-              { name: 'NIP jest zbyt krótki', match: 'rangeUnderflow' },
+              {
+                name: 'NIP jest zbyt długi (NIP ma 10 cyfr)',
+                match: 'rangeOverflow',
+              },
+              {
+                name: 'NIP jest zbyt krótki (NIP ma 10 cyfr)',
+                match: 'rangeUnderflow',
+              },
               {
                 name: 'NIP powinien składać się tylko z cyfr',
                 match: 'stepMismatch',
@@ -75,7 +77,7 @@ export default async function Settings() {
               required
               min={0}
               step={1}
-              max={999999999}
+              max={9999999999}
             />
           </FormItem>
         </FormFieldset>
@@ -100,6 +102,7 @@ export default async function Settings() {
               required
             />
           </FormItem>
+
           <Flex wrap="wrap" gapX="6">
             <FormItem
               itemName="city"
@@ -120,6 +123,7 @@ export default async function Settings() {
                 required
               />
             </FormItem>
+
             <FormItem
               itemName="postal_code"
               label="Kod pocztowy"
@@ -145,6 +149,7 @@ export default async function Settings() {
               />
             </FormItem>
           </Flex>
+
           <FormItem
             itemName="country"
             label="Kraj"
@@ -194,35 +199,11 @@ export default async function Settings() {
             </FormItem>
 
             <Form.Field name="currency" className="my-3 max-w-3xs w-full">
-              <Flex direction="column">
-                <Form.Label>Waluta rozliczeń*</Form.Label>
-                <Form.Control asChild>
-                  <Select.Root
-                    required
-                    defaultValue={existingCompanyData?.currency || 'PLN'}
-                  >
-                    <Select.Trigger />
-                    <Select.Content>
-                      {currencies.map((currency) => (
-                        <Select.Item
-                          value={currency.value}
-                          key={currency.label}
-                        >
-                          <Flex align="center" justify="center" gapX="2">
-                            <Image
-                              src={currency.path}
-                              width={20}
-                              height={20}
-                              alt={currency.imageAltText}
-                            />
-                            <Text>{currency.label}</Text>
-                          </Flex>
-                        </Select.Item>
-                      ))}
-                    </Select.Content>
-                  </Select.Root>
-                </Form.Control>
-              </Flex>
+              <CurrencySelect
+                label="Waluta rozliczeń"
+                isObligatory
+                defaultCurrency={existingCompanyData?.currency}
+              />
             </Form.Field>
           </Flex>
 

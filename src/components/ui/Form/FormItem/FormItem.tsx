@@ -8,9 +8,10 @@ export const FormItem = ({
   label,
   isObligatory = false,
   possibleErrors = [],
+  className,
 }: PropsWithChildren<FormItemProps>) => {
   return (
-    <Form.Field name={itemName} className="my-3">
+    <Form.Field name={itemName} className={`my-3 ${className}`}>
       <Form.Label>
         {label}
         {isObligatory && '*'}
