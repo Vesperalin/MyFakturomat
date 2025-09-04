@@ -15,11 +15,15 @@ import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import { UnitsSelect } from '@/components/features/items';
 import { useState } from 'react';
 import { CurrencySelect } from '@/components/features/common';
+import { ItemUnit } from '@prisma/client';
+import type { ItemUnitValue } from '@/components/features/items';
 
 export default function Page() {
   const [isVat, setIsVat] = useState(false);
   const [vatRate, setVatRate] = useState<number>(0);
   const [priceNetto, setPriceNetto] = useState<string>('');
+  const [unit, setUnit] = useState<ItemUnitValue>(ItemUnit.piece);
+  const [customUnit, setCustomUnit] = useState<string>('');
 
   const parsedNetto = parseFloat(priceNetto);
   const nettoValue = Number.isFinite(parsedNetto) ? parsedNetto : 0;
@@ -103,39 +107,40 @@ export default function Page() {
               ]}
               className="flex flex-col"
             >
-              <UnitsSelect defaultUnit={undefined} />
+              <UnitsSelect
+                defaultUnit={undefined}
+                value={unit}
+                onChange={(val) => setUnit(val)}
+              />
             </FormItem>
+            {unit === 'other' && (
+              <FormItem
+                itemName="custom_unit"
+                label="Własna jednostka"
+                isObligatory
+                possibleErrors={[
+                  {
+                    name: 'Własna jednostka jest obowiązkowa',
+                    match: 'valueMissing',
+                  },
+                ]}
+              >
+                <TextField.Root
+                  size="3"
+                  radius="medium"
+                  placeholder="Podaj nazwę jednostki"
+                  required
+                  value={customUnit}
+                  onChange={(e) => setCustomUnit(e.target.value)}
+                  maxLength={64}
+                />
+              </FormItem>
+            )}
           </Flex>
         </FormFieldset>
 
         <FormFieldset legend="Ceny">
-          <FormItem
-            itemName="price_netto"
-            label="Cena netto"
-            isObligatory
-            possibleErrors={[
-              { name: 'Cena netto jest obowiązkowa', match: 'valueMissing' },
-              {
-                name: 'Cena netto powinna być nieujemna',
-                match: 'rangeUnderflow',
-              },
-            ]}
-          >
-            <TextField.Root
-              // defaultValue={existingCompanyData?.nip || undefined}
-              size="3"
-              radius="medium"
-              placeholder="Podaj cenę netto"
-              type="number"
-              required
-              min={0}
-              step={0.01}
-              value={priceNetto}
-              onChange={(e) => setPriceNetto(e.target.value)}
-            />
-          </FormItem>
-
-          <Form.Field name="is_vat" className="my-3">
+          <Form.Field name="is_vat" className="my-3 shrink-0">
             <Flex align="center" gapX="2">
               <Form.Label>Czy obowiązuje VAT</Form.Label>
               <Form.Control asChild>
@@ -143,43 +148,6 @@ export default function Page() {
               </Form.Control>
             </Flex>
           </Form.Field>
-
-          {isVat && (
-            <FormItem
-              itemName="vat_rate"
-              label="Stawka VAT"
-              isObligatory
-              possibleErrors={[
-                { name: 'Stawka VAT jest obowiązkowa', match: 'valueMissing' },
-              ]}
-            >
-              <Select.Root
-                required
-                defaultValue="0"
-                onValueChange={(value) => setVatRate(parseFloat(value))}
-              >
-                <Select.Trigger />
-                <Select.Content>
-                  <Select.Item value="0">0%</Select.Item>
-                  <Select.Item value="0.05">5%</Select.Item>
-                  <Select.Item value="0.08">8%</Select.Item>
-                  <Select.Item value="0.23">23%</Select.Item>
-                </Select.Content>
-              </Select.Root>
-            </FormItem>
-          )}
-
-          <FormItem itemName="price_brutto" label="Cena brutto" isObligatory>
-            <TextField.Root
-              // defaultValue={existingCompanyData?.nip || undefined}
-              size="3"
-              radius="medium"
-              placeholder="Wyliczona cena brutto"
-              type="number"
-              value={priceNetto === '' ? '' : priceBrutto.toFixed(2)}
-              disabled
-            />
-          </FormItem>
 
           <Form.Field name="currency" className="my-3 max-w-3xs w-full">
             <CurrencySelect
@@ -189,6 +157,78 @@ export default function Page() {
               // defaultCurrency={existingCompanyData?.currency}
             />
           </Form.Field>
+
+          <Flex wrap="wrap" gapX="6">
+            <FormItem
+              itemName="price_netto"
+              label="Cena netto"
+              isObligatory
+              possibleErrors={[
+                { name: 'Cena netto jest obowiązkowa', match: 'valueMissing' },
+                {
+                  name: 'Cena netto powinna być nieujemna',
+                  match: 'rangeUnderflow',
+                },
+              ]}
+            >
+              <TextField.Root
+                // defaultValue={existingCompanyData?.nip || undefined}
+                size="3"
+                radius="medium"
+                placeholder="Podaj cenę netto"
+                type="number"
+                required
+                min={0}
+                step={0.01}
+                value={priceNetto}
+                onChange={(e) => setPriceNetto(e.target.value)}
+              />
+            </FormItem>
+
+            {isVat && (
+              <FormItem
+                itemName="vat_rate"
+                label="Stawka VAT"
+                isObligatory
+                possibleErrors={[
+                  {
+                    name: 'Stawka VAT jest obowiązkowa',
+                    match: 'valueMissing',
+                  },
+                ]}
+                className="flex flex-col"
+              >
+                <Select.Root
+                  required
+                  defaultValue="0"
+                  onValueChange={(value) => setVatRate(parseFloat(value))}
+                  size="3"
+                >
+                  <Select.Trigger />
+                  <Select.Content>
+                    <Select.Item value="0">0%</Select.Item>
+                    <Select.Item value="0.05">5%</Select.Item>
+                    <Select.Item value="0.08">8%</Select.Item>
+                    <Select.Item value="0.23">23%</Select.Item>
+                  </Select.Content>
+                </Select.Root>
+              </FormItem>
+            )}
+          </Flex>
+
+          <Flex wrap="wrap" gapX="6">
+            <FormItem itemName="price_brutto" label="Cena brutto" isObligatory>
+              <TextField.Root
+                // defaultValue={existingCompanyData?.nip || undefined}
+                size="3"
+                radius="medium"
+                placeholder="Wyliczona cena brutto"
+                type="number"
+                value={priceNetto === '' ? '' : priceBrutto.toFixed(2)}
+                disabled
+              />
+            </FormItem>
+          </Flex>
         </FormFieldset>
       </Form.Root>
     </>

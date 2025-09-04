@@ -16,7 +16,7 @@ export const CurrencySelect = ({
         {isObligatory && '*'}
       </Form.Label>
       <Form.Control asChild>
-        <Select.Root required defaultValue={defaultCurrency || 'PLN'}>
+        <Select.Root required defaultValue={defaultCurrency || 'PLN'} size="3">
           <Select.Trigger />
           <Select.Content>
             {currencies.map((currency) => (
