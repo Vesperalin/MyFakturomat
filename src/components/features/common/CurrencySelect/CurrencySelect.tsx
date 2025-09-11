@@ -6,7 +6,7 @@ import { CurrencySelectProps } from './CurrencySelect.types';
 
 export const CurrencySelect = ({
   label,
-  isObligatory = false,
+  isObligatory,
   defaultCurrency,
 }: CurrencySelectProps) => {
   return (

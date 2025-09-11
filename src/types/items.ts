@@ -1,7 +1,5 @@
-import { Prisma, Item } from '@prisma/client';
+import { Item } from '@prisma/client';
 
-type ItemCreateInput = Prisma.ItemCreateInput;
+type ItemCreateBody = Omit<Item, 'id' | 'userId'>;
 
-type ItemUpdateInput = Prisma.ItemUpdateInput;
-
-export type { Item, ItemCreateInput, ItemUpdateInput };
+export type { ItemCreateBody };

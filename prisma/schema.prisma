@@ -72,7 +72,7 @@ model Item {
   id           String    @id @default(cuid())
   name         String    @db.VarChar(512)
   price_netto  Float
-  vat_rate     Float
+  vat_rate     Float?
   price_brutto Float
   currency     Currency
   unit         ItemUnit?
