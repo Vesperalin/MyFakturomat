@@ -69,15 +69,15 @@ model Company {
 }
 
 model Item {
-  id           String    @id @default(cuid())
-  name         String    @db.VarChar(512)
+  id           String   @id @default(cuid())
+  name         String   @db.VarChar(512)
   price_netto  Float
   vat_rate     Float?
   price_brutto Float
   currency     Currency
-  unit         ItemUnit?
-  custom_unit  String?   @db.VarChar(64)
+  unit         ItemUnit
+  custom_unit  String?  @db.VarChar(64)
   quantity     Float
   userId       String
-  user         User      @relation(fields: [userId], references: [id])
+  user         User     @relation(fields: [userId], references: [id])
 }

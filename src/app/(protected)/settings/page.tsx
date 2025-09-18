@@ -8,7 +8,7 @@ import { CustomToast } from '@/components/features/settings';
 import { FormFieldset, FormItem, PageTitle } from '@/components/ui';
 import { CurrencySelect } from '@/components/features/common';
 
-// made it as server component to try different this approach
+// * made it as server component + Radix to try this approach - without Zod
 export default async function Settings() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
@@ -75,7 +75,7 @@ export default async function Settings() {
               placeholder="Podaj NIP"
               type="number"
               required
-              min={0}
+              min={1000000000}
               step={1}
               max={9999999999}
             />
