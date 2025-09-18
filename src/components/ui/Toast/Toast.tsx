@@ -13,7 +13,7 @@ export function Toast({
   onCloseClick,
 }: ToastProps) {
   return (
-    <RadixToast.Provider label={`${type}-notification`} duration={2500}>
+    <RadixToast.Provider label={`${type}-notification`} duration={3000}>
       <RadixToast.Root
         duration={2500}
         open={isOpen}

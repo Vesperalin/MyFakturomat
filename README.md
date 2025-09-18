@@ -36,3 +36,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 ## In MVP this app is not meant for production, only for learning purposes - it doesn't have unit tests, integration tests and e2e tests
+
+## My learning goals
+- Next.js 15
+- NextAuth
+- Prisma
+- Docker (Dockerfile, docker compose, Docker syntax)
+- Tailwind
+- Radix UI (primitives and themes)
+- React 19

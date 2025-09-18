@@ -24,12 +24,12 @@ export const CustomToast = () => {
     <Toast
       isOpen={isOpen}
       setIsOpen={handleSetIsOpen}
-      title={isSuccess ? 'Zapisano' : 'Nie zapisano'}
+      title={isSuccess ? 'Zapisano' : 'Błąd - nie zapisano'}
       type={saveCompanyCookie as ToastType}
       message={
         isSuccess
-          ? 'Zapisano zmiany w ustawieniach.'
-          : 'Nie zapisano zmian w ustawieniach.'
+          ? 'Zapisano zmiany w ustawieniach firmy.'
+          : 'Nie zapisano zmian w ustawieniach firmy.'
       }
       onCloseClick={() => {
         Cookies.remove('company-saved', { path: '/settings' });
